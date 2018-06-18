@@ -1,6 +1,6 @@
 from pyquery import PyQuery
 import requests
-import time
+from App.Config.ConfigTool import ConfigTool
 
 
 class Common:
@@ -18,6 +18,7 @@ class Common:
             'Referer': 'https://laravel-china.org/',
             'Host': 'laravel-china.org',
             'Connection': 'close',
+            'Cookie': '',
         }
 
     def get_pyquery_doc(self, url, headers=''):
@@ -41,7 +42,7 @@ class Common:
         :return:
         """
         request_param = self.__request_param
-        request_param['timeout'] = 10
+        request_param['timeout'] = 20
         request_param['url'] = url
         # try:
         if headers != '':

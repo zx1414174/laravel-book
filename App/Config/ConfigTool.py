@@ -21,6 +21,11 @@ class ConfigTool:
         return cls.__install
 
     def get_config_value(self, item):
+        """
+        获取参数
+        :param item:
+        :return str:
+        """
         item_split = item.split('.')
         file_name = item_split[0]
         option = item_split[1]
@@ -29,7 +34,7 @@ class ConfigTool:
             cf = configparser.ConfigParser()
             # 获取文件绝对路径
             config_path = os.path.dirname(__file__) + '/' + file_name + '.conf'
-            cf.read(config_path)
+            cf.read(config_path, 'utf-8')
             self.__config_data[file_name] = cf
         return self.__config_data[file_name].get(option, key)
 

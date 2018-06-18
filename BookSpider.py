@@ -3,6 +3,7 @@ from App.Url.Common import Common
 import pdfkit
 import time
 import os
+from App.Config.ConfigTool import ConfigTool
 
 
 class BookSpider(CommonSpider):
@@ -68,8 +69,6 @@ class BookSpider(CommonSpider):
         html_list = []
         book_menu = self.parse_menu(doc)
         for index, menu in enumerate(book_menu):
-            if index == 56:
-                break
             file_name = 'book_temp/' + '.'.join([str(index), "html"])
             with open(file_name, 'wb') as f:
                 book_doc = self._request_tool.get_pyquery_doc(menu['url'])
@@ -82,6 +81,7 @@ class BookSpider(CommonSpider):
             os.remove(html)
 
 
-book_spider = BookSpider('Web 开发实战入门', 'https://laravel-china.org/courses/laravel-essential-training-5.5')
+config = ConfigTool()
+book_spider = BookSpider(config.get_config_value('book.basic.name'), config.get_config_value('book.basic.url'))
 book_spider.run()
 
